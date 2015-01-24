@@ -23,11 +23,18 @@ function Update()
 function GameOver(){
   isGameOver = true;
 //  var spriteRenderer = GetComponent(SpriteRenderer).color.a = 1.0;
- /* var gameObjects = GameObject.FindGameObjectsWithTag("GameOver");
-  var gameOverSprite = gameObjects[0].GetComponent("GameOver");
+//  var gameObjects = GameObject.FindGameObjectsWithTag("GameOver");
+//  var gameOverImage = gameObjects[0].GetComponent(UnityEngine.UI.Graphic);
+  
+//  gameOverImage.CrossFadeAlpha(0.0, 1.0, false);
+  
+  /*var gameOverSprite = gameObjects[0].GetComponent("GameOver");
   
   var hudCanvasObjects = GameObject.FindGameObjectsWithTag("HUDCanvas");
   var hudCanvas = gameObjects[0].GetComponent("HUDCanvas");
+  */
   
-  //Debug.Log("asdf");*/
+  
+		Application.LoadLevel ("game-over");
+  //Debug.Log("asdf");
 }
