@@ -109,7 +109,8 @@ public class HandTracker : MonoBehaviour
 			{
 				if(!_Bodies.ContainsKey(body.TrackingId))
 				{
-					_Bodies[body.TrackingId] = CreateBodyObject(body.TrackingId);
+//					if(body.HandRightState == Kinect.HandState.Closed)
+						_Bodies[body.TrackingId] = CreateBodyObject(body.TrackingId, body);
 				}
 				
 				RefreshBodyObject(body, _Bodies[body.TrackingId]);
@@ -117,22 +118,47 @@ public class HandTracker : MonoBehaviour
 		}
 	}
 	
-	private GameObject CreateBodyObject(ulong id)
+	private GameObject CreateBodyObject(ulong id, Kinect.Body bodyData) //need to correlate id with body
 	{
+//		print ("asdf");
+
 		GameObject body = new GameObject("Body:" + id);
-		
+/*		GameObject objType;
+
+		if(bodyData.HandRightState == Kinect.HandState.Closed)
+		{
+			print (bodyData.HandRightState + " if");	
+			objType = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+			
+		}
+		else if (bodyData.HandRightState == Kinect.HandState.Open)
+		{
+			print (bodyData.HandRightState + " else");
+			objType = GameObject.CreatePrimitive(PrimitiveType.Cube);
+			
+		}else{
+			//print (bodyData.HandRightState + " else");
+			objType = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+		}
+*/
 		for (Kinect.JointType jt = Kinect.JointType.SpineBase; jt <= Kinect.JointType.ThumbRight; jt++)
 		{
+//			print ("start");
+//			GameObject jointObj = objType;
+
 			GameObject jointObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-			
 			LineRenderer lr = jointObj.AddComponent<LineRenderer>();
 			lr.SetVertexCount(2);
 			lr.material = BoneMaterial;
 			lr.SetWidth(0.05f, 0.05f);
-			
+
 			jointObj.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
 			jointObj.name = jt.ToString();
 			jointObj.transform.parent = body.transform;
+
+			print ("jointObj.name: " + jointObj.name);
+//			print ("jointObj.transfor.parent: " + jointObj.transform.partent);
+
 		}
 		
 		return body;
@@ -140,10 +166,25 @@ public class HandTracker : MonoBehaviour
 	
 	private void RefreshBodyObject(Kinect.Body body, GameObject bodyObject)
 	{
+		if(body.HandRightState == Kinect.HandState.Closed)
+		{
+//			print (body.HandRightState + " if");			
+		}
+		else if (body.HandRightState == Kinect.HandState.Open)
+		{
+//			print (body.HandRightState + " else if");		
+		}
+		else
+		{
+//			print (body.HandRightState + " else");
+		}
+
+
 		for (Kinect.JointType jt = Kinect.JointType.SpineBase; jt <= Kinect.JointType.ThumbRight; jt++)
 		{
-	
+
 //			print (jt);
+//			print (body.HandRightState);
 //			Console.WriteLine("spam");
 //			if(jt == "HandRight" || "HandTipRight" || "ThumbRight" || "WristRight" || "ElbowRight" || "ShoulderRight" || "SpineShoulder" )
 			if(jt == Kinect.JointType.HandRight || jt == Kinect.JointType.HandTipRight || jt == Kinect.JointType.WristRight || jt == Kinect.JointType.ThumbRight)
@@ -159,13 +200,34 @@ public class HandTracker : MonoBehaviour
 			
 				Transform jointObj = bodyObject.transform.FindChild(jt.ToString());
 				jointObj.localPosition = GetVector3FromJoint(sourceJoint);
+
+//				print (jointObj);
 			
 				LineRenderer lr = jointObj.GetComponent<LineRenderer>();
 				if(targetJoint.HasValue)
 				{
 					lr.SetPosition(0, jointObj.localPosition);
 					lr.SetPosition(1, GetVector3FromJoint(targetJoint.Value));
-					lr.SetColors(GetColorForState (sourceJoint.TrackingState), GetColorForState(targetJoint.Value.TrackingState));
+
+					if(body.HandRightState == Kinect.HandState.Open)
+					{
+//						print (body.HandRightState + " if");	
+						lr.SetColors(GetColorForState (sourceJoint.TrackingState), GetColorForState(targetJoint.Value.TrackingState));
+//						bodyObject = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+					}
+					else if (body.HandRightState == Kinect.HandState.Closed)
+					{
+//						print (body.HandRightState + " else if");
+						lr.SetColors(new Color(1, 1, 1, 0), new Color(1, 1, 1, 0));
+//						jointObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+					}
+					else
+					{
+//						print (body.HandRightState + " else");
+//						lr.SetColors( new Color(1, 1, 1, 0), new Color(1, 1, 1, 0));
+						lr.SetColors(GetColorForState (sourceJoint.TrackingState), GetColorForState(targetJoint.Value.TrackingState));
+					}
+
 				}
 				else
 				{
