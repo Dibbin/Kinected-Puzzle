@@ -13,6 +13,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Kinect = Windows.Kinect;
 
+
 public class HandTracker : MonoBehaviour
 {
 	public Material BoneMaterial;
@@ -258,6 +259,15 @@ public class HandTracker : MonoBehaviour
 							print ("Hand grabbed");
 							print ("Hand x:" + rightHandPosition.x + ", y:" + rightHandPosition.y + ", z:" + rightHandPosition.z);
 							handOpen.transform.localPosition = new Vector3(-9999,-9999,-9999);
+							
+							var grabObjects = GameObject.FindGameObjectsWithTag("GrabTimer");
+							var grabTimer = grabObjects[0].GetComponent<UnityEngine.UI.Slider>();
+
+							//var grabTimer = grabObjects[0];
+							grabTimer.value = 0.5f;
+							//Debug.Log ("asdf");
+
+
 						}
 						//lr.SetColors(new Color(1, 1, 1, 0), new Color(1, 1, 1, 0));
 //						jointObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
