@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 50d4bb79dd910ef4486910454aa6f1fc
+guid: c422dc02cd8783744acbdb6e5b1c61c5
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
@@ -7,7 +7,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: polySurface7
+    4300000: handClosed_geo
     9500000: //RootNode
   materials:
     importMaterials: 1
