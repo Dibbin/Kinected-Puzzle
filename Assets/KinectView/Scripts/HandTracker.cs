@@ -245,6 +245,7 @@ public class HandTracker : MonoBehaviour
 							print ("Hand released");
 							print ("Hand x:" + rightHandPosition.x + ", y:" + rightHandPosition.y + ", z:" + rightHandPosition.z);
 							handClosed.transform.localPosition = new Vector3(-9999,-9999,-9999);
+							handOpen.transform.localPosition = rightHandPosition;
 						}
 //						print (body.HandRightState + " if");	
 						//lr.SetColors(GetColorForState (sourceJoint.TrackingState), GetColorForState(targetJoint.Value.TrackingState));
@@ -259,6 +260,7 @@ public class HandTracker : MonoBehaviour
 							print ("Hand grabbed");
 							print ("Hand x:" + rightHandPosition.x + ", y:" + rightHandPosition.y + ", z:" + rightHandPosition.z);
 							handOpen.transform.localPosition = new Vector3(-9999,-9999,-9999);
+							handClosed.transform.localPosition = rightHandPosition;
 							
 							var grabObjects = GameObject.FindGameObjectsWithTag("GrabTimer");
 							var grabTimer = grabObjects[0].GetComponent<UnityEngine.UI.Slider>();
@@ -306,7 +308,19 @@ public class HandTracker : MonoBehaviour
 	
 	public static Vector3 GetVector3FromJoint(Kinect.Joint joint)
 	{
-		return new Vector3(joint.Position.X * 10 + 100, joint.Position.Y * 20 + 6.5f, joint.Position.Z * -10 + 43);
+		float z = joint.Position.Z * -5 + 15;
+		if (z < 7.5f) {
+			z = 7.5f;
+		}
+
+		float y = joint.Position.Y * 10 + 5;
+		if (y > 5.5f) {
+				y = 5.5f;
+		} else if (y < 2.7f) {
+				y = 2.7f;
+		}
+
+		return new Vector3(joint.Position.X * 10 + 3, y, z);
 	}
 }
 
