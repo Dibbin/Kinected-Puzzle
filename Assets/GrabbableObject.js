@@ -64,6 +64,14 @@ function Update() {
 			     	  	break;
 			     	  	case 'airTank': 
 		 		         airTankGameObj.transform.position.y += 110.0f;
+		 		         
+		 		         
+						var oxySliders = GameObject.FindGameObjectsWithTag("OxygenSlider");
+						var oxySlider = oxySliders[0].GetComponent(UnityEngine.UI.Slider);
+						
+						oxySlider.value += 50;
+		 		         
+		 		         
 			     	  	break;
 			     	  	case 'battery': 
 		 		         batteryGameObj.transform.position.y += 110.0f;
