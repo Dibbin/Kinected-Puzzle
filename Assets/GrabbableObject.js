@@ -18,6 +18,8 @@ var numFlashlightItems = 0;
 
 var numSpaceSuitItems = 0;
 
+var keyItemsFound = 0;
+
 function Update() {
 	//HandTracker.timeLeftToGrab -= Time.deltaTime;
 	
@@ -75,6 +77,7 @@ function Update() {
 			     			batteryGameObj.transform.position.y -= 110.0f;	
 			     			flashlightOnGameObj.transform.position.y += 110.0f;
 			     			numFlashlightItems = 0;
+			     			keyItemsFound++;
 			     		}
 			     		if(numSpaceSuitItems == 3)
 			     		{
@@ -83,6 +86,14 @@ function Update() {
 			     			o2TankGameObj.transform.position.y -= 110.0f;
 			     			spaceSuitGameObj.transform.position.y += 110.0f;
 			     			numSpaceSuitItems = 0;
+			     			keyItemsFound++;
+			     		}
+			     		
+			     		if(keyItemsFound == 2){
+			     		  
+			     		  keyItemsFound = 0;
+							Application.LoadLevel ("win");
+			     		  
 			     		}
 			     	
 			     	
