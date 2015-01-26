@@ -242,8 +242,8 @@ public class HandTracker : MonoBehaviour
 						if(isGrabbing)
 						{
 							isGrabbing = false;
-							print ("Hand released");
-							print ("Hand x:" + rightHandPosition.x + ", y:" + rightHandPosition.y + ", z:" + rightHandPosition.z);
+							//print ("Hand released");
+							//print ("Hand x:" + rightHandPosition.x + ", y:" + rightHandPosition.y + ", z:" + rightHandPosition.z);
 							handClosed.transform.localPosition = new Vector3(-9999,-9999,-9999);
 							handOpen.transform.localPosition = rightHandPosition;
 						}
@@ -257,8 +257,8 @@ public class HandTracker : MonoBehaviour
 						if(!isGrabbing)
 						{
 							isGrabbing = true;
-							print ("Hand grabbed");
-							print ("Hand x:" + rightHandPosition.x + ", y:" + rightHandPosition.y + ", z:" + rightHandPosition.z);
+							//print ("Hand grabbed");
+							//print ("Hand x:" + rightHandPosition.x + ", y:" + rightHandPosition.y + ", z:" + rightHandPosition.z);
 							handOpen.transform.localPosition = new Vector3(-9999,-9999,-9999);
 							handClosed.transform.localPosition = rightHandPosition;
 							
