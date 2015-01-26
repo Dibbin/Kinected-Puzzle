@@ -2,12 +2,21 @@
  
 var TheSystem : Transform;
 var Distance  : float;
-var MaxDistance : float = 1000;  
+var MaxDistance : float = 1000; 
 
 var handOpenIntersect = false;
 
 function Update() {
-
+	//HandTracker.timeLeftToGrab -= Time.deltaTime;
+	
+  var allSliders = GameObject.FindGameObjectsWithTag("GrabTimer");
+  var thisSlider = allSliders[0].GetComponent(UnityEngine.UI.Slider);
+  
+  thisSlider.value -= Time.deltaTime;
+	
+	if(thisSlider.value > 0){
+	
+	
  var hit : RaycastHit;
  var vectorCameraToObj = new Vector3(transform.position.x - TheSystem.position.x, transform.position.y - TheSystem.position.y, transform.position.z - TheSystem.position.z);
 
@@ -27,4 +36,8 @@ function Update() {
 	  		}
 		}
 	}
+	
+	}
+	
+
 }
