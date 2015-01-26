@@ -10,7 +10,7 @@ function Update () {
 	timeToWait -= Time.deltaTime;
 	if (timeToWait <= 0)
 	{
-		Application.LoadLevel ("mars-outside");
+		Application.LoadLevel ("mars-outside-blocked");
 	}
 }
 
