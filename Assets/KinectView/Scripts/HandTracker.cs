@@ -219,11 +219,19 @@ public class HandTracker : MonoBehaviour
 					rightHandPosition = GetVector3FromJoint(targetJoint.Value);
 
 					//set hand position on screen
-				
-					var handObjects = GameObject.FindGameObjectsWithTag("Hand");
-					handObjects[0].transform.localPosition = rightHandPosition;
-					handObjects = GameObject.FindGameObjectsWithTag("HandClosed");
-					handObjects[0].transform.localPosition = rightHandPosition;
+					
+					var handObjects = GameObject.FindGameObjectsWithTag("HandClosed");
+					var handClosed = handObjects[0];
+					handObjects = GameObject.FindGameObjectsWithTag("Hand");
+					var handOpen = handObjects[0];
+
+					if(isGrabbing){
+						handObjects = GameObject.FindGameObjectsWithTag("HandClosed");
+						handClosed.transform.localPosition = rightHandPosition;
+					}else{
+						handObjects = GameObject.FindGameObjectsWithTag("Hand");
+						handOpen.transform.localPosition = rightHandPosition;
+					}
 
 					//lr.SetPosition(0, jointObj.localPosition);
 					//lr.SetPosition(1, GetVector3FromJoint(targetJoint.Value));
@@ -235,6 +243,7 @@ public class HandTracker : MonoBehaviour
 							isGrabbing = false;
 							print ("Hand released");
 							print ("Hand x:" + rightHandPosition.x + ", y:" + rightHandPosition.y + ", z:" + rightHandPosition.z);
+							handClosed.transform.localPosition = new Vector3(-9999,-9999,-9999);
 						}
 //						print (body.HandRightState + " if");	
 						//lr.SetColors(GetColorForState (sourceJoint.TrackingState), GetColorForState(targetJoint.Value.TrackingState));
@@ -248,6 +257,7 @@ public class HandTracker : MonoBehaviour
 							isGrabbing = true;
 							print ("Hand grabbed");
 							print ("Hand x:" + rightHandPosition.x + ", y:" + rightHandPosition.y + ", z:" + rightHandPosition.z);
+							handOpen.transform.localPosition = new Vector3(-9999,-9999,-9999);
 						}
 						//lr.SetColors(new Color(1, 1, 1, 0), new Color(1, 1, 1, 0));
 //						jointObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
