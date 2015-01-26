@@ -222,6 +222,8 @@ public class HandTracker : MonoBehaviour
 				
 					var handObjects = GameObject.FindGameObjectsWithTag("Hand");
 					handObjects[0].transform.localPosition = rightHandPosition;
+					handObjects = GameObject.FindGameObjectsWithTag("HandClosed");
+					handObjects[0].transform.localPosition = rightHandPosition;
 
 					//lr.SetPosition(0, jointObj.localPosition);
 					//lr.SetPosition(1, GetVector3FromJoint(targetJoint.Value));
