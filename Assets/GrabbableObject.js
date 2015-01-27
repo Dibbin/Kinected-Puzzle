@@ -18,6 +18,8 @@ var numFlashlightItems = 0;
 
 var numSpaceSuitItems = 0;
 
+var keyItemsFound = 0;
+
 function Update() {
 	//HandTracker.timeLeftToGrab -= Time.deltaTime;
 	
@@ -62,6 +64,14 @@ function Update() {
 			     	  	break;
 			     	  	case 'airTank': 
 		 		         airTankGameObj.transform.position.y += 110.0f;
+		 		         
+		 		         
+						var oxySliders = GameObject.FindGameObjectsWithTag("OxygenSlider");
+						var oxySlider = oxySliders[0].GetComponent(UnityEngine.UI.Slider);
+						
+						oxySlider.value += 50;
+		 		         
+		 		         
 			     	  	break;
 			     	  	case 'battery': 
 		 		         batteryGameObj.transform.position.y += 110.0f;
@@ -75,6 +85,7 @@ function Update() {
 			     			batteryGameObj.transform.position.y -= 110.0f;	
 			     			flashlightOnGameObj.transform.position.y += 110.0f;
 			     			numFlashlightItems = 0;
+			     			keyItemsFound++;
 			     		}
 			     		if(numSpaceSuitItems == 3)
 			     		{
@@ -83,6 +94,14 @@ function Update() {
 			     			o2TankGameObj.transform.position.y -= 110.0f;
 			     			spaceSuitGameObj.transform.position.y += 110.0f;
 			     			numSpaceSuitItems = 0;
+			     			keyItemsFound++;
+			     		}
+			     		
+			     		if(keyItemsFound == 2){
+			     		  
+			     		  keyItemsFound = 0;
+							Application.LoadLevel ("win");
+			     		  
 			     		}
 			     	
 			     	
