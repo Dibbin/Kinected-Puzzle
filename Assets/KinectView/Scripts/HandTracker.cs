@@ -24,6 +24,8 @@ public class HandTracker : MonoBehaviour
 	
 	private Dictionary<ulong, GameObject> _Bodies = new Dictionary<ulong, GameObject>();
 	private BodySourceManager _BodyManager;
+	private ulong CurrentTrackingID = 0;
+	private System.DateTime LastUpdateTime;
 	
 	private Dictionary<Kinect.JointType, Kinect.JointType> _BoneMap = new Dictionary<Kinect.JointType, Kinect.JointType>()
 	{
@@ -77,17 +79,38 @@ public class HandTracker : MonoBehaviour
 		}
 		
 		List<ulong> trackedIds = new List<ulong>();
+
+		
+		if((System.DateTime.Now - LastUpdateTime).TotalSeconds > 5 && ){
+			Debug.Log("Lost Player One! Getting another one...");
+			CurrentTrackingID = 0;
+		}
+		
 		foreach(var body in data)
 		{
 			if (body == null)
 			{
 				continue;
 			}
+
+
 			
-			if(body.IsTracked)
-			{
-				trackedIds.Add (body.TrackingId);
+			if(body.IsTracked){
+				if(CurrentTrackingID == 0)
+				{
+					trackedIds.Add (body.TrackingId);
+					Debug.Log("Player One found! id:" + body.TrackingId);
+					CurrentTrackingID = body.TrackingId;
+					LastUpdateTime = System.DateTime.Now;
+				}else if(body.TrackingId == CurrentTrackingID){
+					//Debug.Log("Player One seen!");
+					LastUpdateTime = System.DateTime.Now;
+				}else{
+					Debug.Log("Body found, but we already have a Player One! id:" + body.TrackingId);
+				}
 			}
+
+
 		}
 		
 		List<ulong> knownIds = new List<ulong>(_Bodies.Keys);
@@ -109,7 +132,7 @@ public class HandTracker : MonoBehaviour
 				continue;
 			}
 			
-			if(body.IsTracked)
+			if(body.TrackingId == CurrentTrackingID)
 			{
 				if(!_Bodies.ContainsKey(body.TrackingId))
 				{
