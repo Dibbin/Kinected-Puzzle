@@ -35,10 +35,10 @@ function Update() {
 
 		  if (Physics.Raycast (TheSystem.transform.position, TheSystem.transform.TransformDirection(vectorCameraToObj), hit)) {    
 				//Debug.Log(hit.transform.gameObject.tag);
-		 		//Debug.Log("hit detected on object tag:" + hit.transform.gameObject.tag);
+		 		Debug.Log("hit detected on object tag:" + hit.transform.gameObject.tag + ", name:" + hit.transform.gameObject.name);
 			 	
 			    if(hit.transform.gameObject.tag == "grabbable"){
-		 		    Debug.Log("hit detected on object tag:" + hit.transform.gameObject.tag);
+		 		    //Debug.Log("hit detected on object tag:" + hit.transform.gameObject.tag);
 					//	    	handOpenIntersect = true;
 					//	    }else if(hit.transform.gameObject.tag == "HandClosed"){
 			     	Distance = hit.distance;

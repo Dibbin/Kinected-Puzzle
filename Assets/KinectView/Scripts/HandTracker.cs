@@ -81,7 +81,7 @@ public class HandTracker : MonoBehaviour
 		List<ulong> trackedIds = new List<ulong>();
 
 		
-		if((System.DateTime.Now - LastUpdateTime).TotalSeconds > 5 && ){
+		if((System.DateTime.Now - LastUpdateTime).TotalSeconds > 5 && CurrentTrackingID != 0){
 			Debug.Log("Lost Player One! Getting another one...");
 			CurrentTrackingID = 0;
 		}
